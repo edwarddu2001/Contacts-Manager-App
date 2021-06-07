@@ -1,0 +1,36 @@
+﻿@page "/"
+
+<MudCard Elevation="25">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Add Contact</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudTextField @bind-Value="TextValue" Label="First Name" Variant="Variant.Text"></MudTextField>
+        <MudToolBarSpacer />
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddButtonClicked">Add</MudButton>
+    </MudCardContent>
+</MudCard>
+
+<MudTable>
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Contacts</MudText>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Phone Number</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>Joe</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    public string TextValue { get; set; }
+
+    private void AddButtonClicked()
+    {
+
+    }
+}
