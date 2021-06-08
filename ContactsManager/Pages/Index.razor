@@ -15,7 +15,7 @@
     </MudCardContent>
 </MudCard>
 
-@*<MudTable>
+<!-- <MudTable>
     <ToolBarContent>
         <MudText Typo="Typo.h6">Contacts</MudText>
     </ToolBarContent>
@@ -37,4 +37,69 @@
     {
 
     }
+    @*
+                // the .razor file
+                        @page "/contactManager"
+                <h3>Contact Manager</h3>
+
+                <input type="text" placeholder="Name..." @bind="name" />
+                <input type="text" placeholder="Phone number..." @bind="phoneNumber" />
+                <button type="button" @onclick="AddContact">Add</button>
+
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                    </tr>
+                    @foreach (var contact in contactsList)
+                    {
+                        <tr>
+                            <td>@contact.Name</td>
+                            <td>@contact.PhoneNumber</td>
+                            <td><button type="button">X</button></td>
+                        </tr>
+                    }
+                </table>
+
+                @code {
+                    Contacts contacts = new Contacts();
+                    private List<Contacts> contactsList = new List<Contacts>();
+                    private string name;
+                    private string phoneNumber;
+
+                    private void AddContact()
+                    {
+                        if (!(string.IsNullOrEmpty(name) && string.IsNullOrEmpty(phoneNumber)))
+                        {
+                            contactsList.Add(new Contacts()
+                            {
+                                Name = name,
+                                PhoneNumber = phoneNumber
+                            });
+                            name = string.Empty;
+                            phoneNumber = string.Empty;
+                        }
+                    }
+                }
+
+        // the .cs file
+                using System;
+        using System.ComponentModel.DataAnnotations;
+
+        namespace ContactManagerApp
+        {
+            public class Contacts
+            {
+                [Required(ErrorMessage = "Name is required")]
+                [StringLength(15, ErrorMessage = "Name is too long")]
+                public string Name{ get; set; }
+
+                [Required(ErrorMessage ="Phone number is required")]
+                [Phone]
+                public string PhoneNumber { get; set; }
+            }
+            //
+        }
+
+    *@
 }
