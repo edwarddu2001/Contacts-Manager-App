@@ -29,7 +29,6 @@ namespace ContactsManager
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddMudServices();
         }
 
