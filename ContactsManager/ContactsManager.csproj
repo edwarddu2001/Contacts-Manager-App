@@ -9,6 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Domain\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="wwwroot\css\bootstrap\bootstrap.min.css" />
     <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
     <None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
@@ -28,4 +31,7 @@
     <PackageReference Include="MudBlazor" Version="5.0.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\" />
+  </ItemGroup>
 </Project>
