@@ -1,0 +1,10 @@
+﻿using System;
+namespace Application
+{
+    public class TestFile
+    {
+        public TestFile()
+        {
+        }
+    }
+}
