@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domain
 {
-    public record Contact { string Name; int PhoneNum; }
+    public record Contact { string Name; int PhoneNum; int ID; }
 
     public static class ContactsList
     {
