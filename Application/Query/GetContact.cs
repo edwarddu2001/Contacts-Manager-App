@@ -8,15 +8,21 @@ using System.Threading.Tasks;
 
 namespace Application.Query
 {
-    public static class GetContact
+    public class GetContact
     {
-        public record Command(int Id) : IRequest<Contacts>;
+        public record Command(int Id) : IRequest<Response>;
 
         public class Handler : IRequestHandler<Command, Response>
         {
+            private Contacts contacts;
+            public Handler(Contacts contacts)
+            {
+                this.contacts = contacts;
+            }
+
             public Task<Response> Handle(Command request, CancellationToken cancellationToken)
             {
-                throw new NotImplementedException();
+                //return Task.FromResult(contacts)
             }
         }
 
