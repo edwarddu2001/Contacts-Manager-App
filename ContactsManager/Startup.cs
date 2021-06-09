@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MudBlazor.Services;
 
+
 namespace ContactsManager
 {
     public class Startup
@@ -30,6 +31,7 @@ namespace ContactsManager
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMudServices();
+            //services.AddSingleton<Repository>;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
