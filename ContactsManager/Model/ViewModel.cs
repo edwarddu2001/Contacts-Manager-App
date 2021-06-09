@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Query
+namespace ContactsManager.Model
 {
-    public class Contacts
+    public class ViewModel
     {
-        public int Id{ get; set; }
-
         [Required(ErrorMessage = "Name is required")]
         [StringLength(15, ErrorMessage = "Name is too long")]
         public string Name { get; set; }
