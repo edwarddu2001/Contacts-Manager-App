@@ -1,19 +1,25 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Query
 {
-    public class GetContact
+    public static class GetContact
     {
-        // Query / Command
-        public record Query(string Name, int phoneNum) : IRequest<Contact>;
+        public record Command(int Id) : IRequest<Contacts>;
 
-        //Handler
+        public class Handler : IRequestHandler<Command, Response>
+        {
+            public Task<Response> Handle(Command request, CancellationToken cancellationToken)
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-
-        // Response
+        public record Response(int Id, string Name, string PhoneNumber);
     }
 }
