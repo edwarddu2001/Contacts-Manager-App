@@ -31,20 +31,22 @@
 <br />
 
 @code {
+    //@Imports Application namespace needed
     public string firstName { get; set; }
     public string lastName { get; set; }
     public string phoneNumber { get; set; }
-    public List<Contact> contactsList;
+    public List<Contacts> contactsList;
 
     protected override async Task OnInitializedAsync()
     {
-        
+        // once imported: List<Contacts> contact = await _mediator.Send(new (Query class from Application());
     }
 
     private void AddButtonClicked()
     {
 
     }
+}
     @*
                 // the .razor file
                         @page "/contactManager"
@@ -110,4 +112,3 @@
         }
 
     *@
-}

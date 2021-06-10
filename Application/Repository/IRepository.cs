@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Application.Repository;
+using System.Collections.Generic;
 
 namespace Application.QueryAndCommand
 {
     public interface IRepository
     {
-        string Name { get; set; }
-        string PhoneNumber { get; set; }
+        public List<Contacts> GetContacts(string name, string phoneNumber);
 
-        public List<Repository> GetContacts();
+        public List<Contacts> RemoveContacts(string name, string phoneNumber);
     }
 }
