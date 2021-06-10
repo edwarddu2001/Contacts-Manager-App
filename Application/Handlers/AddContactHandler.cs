@@ -33,6 +33,7 @@ namespace Application.Handlers
             {
                 return Task.FromResult(new GetContactListQuery());
             }
+            throw new ArgumentException("Contact is invalid!");
         }
     }
 }

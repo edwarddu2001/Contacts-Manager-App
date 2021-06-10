@@ -21,9 +21,13 @@ namespace Infrastructure
 
         public bool RemoveContacts(Contacts contact)
         {
-            if (contactsList.Remove(contact))
+            foreach (Contacts c in contactsList)
             {
-                return true;
+                if (c.Name.Equals(contact.Name) && c.PhoneNum.Equals(contact.PhoneNum))
+                {
+                    contactsList.Remove(c);
+                    return true;
+                }
             }
             return false;
         }
