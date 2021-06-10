@@ -40,6 +40,11 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await UpdateList();
+    }
+
+    private async Task UpdateList()
+    {
         contacts = await _mediator.Send(new GetContactsQuery());
     }
 
@@ -50,12 +55,26 @@
             Name = name,
             PhoneNum = phoneNumber
         };
-        contacts = await _mediator.Send(new AddContactCommand(newContact));
+        bool response = await _mediator.Send(new AddContactCommand(newContact));
+        if (response)
+        {
+            await UpdateList();
+        }
+        throw new ArgumentException("Contact is not valid");
     }
 
     private async Task RemoveButtonClicked(string Name, PhoneAttribute PhoneNumber)
     {
-        //TODO: pass correct contact with given attributes
-        contacts = await _mediator.Send(new RemoveContactCommand(contact));
+        ContactsViewModel newContact = new ContactsViewModel()
+        {
+            Name = Name,
+            PhoneNum = PhoneNumber
+        };
+        bool response = await _mediator.Send(new RemoveContactCommand(newContact));
+        if (response)
+        {
+            await UpdateList();
+        }
+        throw new ArgumentException("Contact does not exist");
     }
 }

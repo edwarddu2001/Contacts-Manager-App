@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Application.Commands
 {
-    public record RemoveContactCommand(ContactsViewModel contact) : IRequest<List<ContactsViewModel>>;
+    public record RemoveContactCommand(ContactsViewModel contact) : IRequest<bool>;
 }

@@ -8,5 +8,5 @@ using Application.ViewModels;
 
 namespace Application.Commands
 {
-    public record AddContactCommand(ContactsViewModel contact) : IRequest<List<ContactsViewModel>>;
+    public record AddContactCommand(ContactsViewModel contact) : IRequest<bool>;
 }
