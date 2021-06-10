@@ -1,5 +1,7 @@
 ﻿using Application.Queries;
+using Application.Repositories;
 using Application.ViewModels;
+using AutoMapper;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,14 +14,20 @@ namespace Application.Handlers
 {
     public class GetContactHandler : IRequestHandler<Query, List<ContactsViewModel>>
     {
-        public GetContactHandler()
-        {
+        private readonly IRepository _data;
+        private readonly IMapper _mapper;
+        private readonly ContactsViewModel _contact;
 
+        public GetContactHandler(IRepository data, ContactsViewModel contact, IMapper mapper)
+        {
+            _data = data;
+            _mapper = mapper;
+            _contact = contact;
         }
 
         public Task<List<ContactsViewModel>> Handle(Query request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_data.GetContacts(_mapper.Map<Contacts>(request.contact));
         }
     }
 }

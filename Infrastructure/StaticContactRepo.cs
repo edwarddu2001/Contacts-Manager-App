@@ -31,5 +31,10 @@ namespace Infrastructure
             }
             return false;
         }
+
+        public List<Contacts> GetContacts(Contacts contact)
+        {
+            return contactsList;
+        }
     }
 }
