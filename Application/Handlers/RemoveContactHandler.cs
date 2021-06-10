@@ -1,5 +1,6 @@
 ﻿using Application.Repositories;
 using Application.Commands;
+using Application.Queries;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace Application.Handlers
 
             if (addCommandSuccess)
     {
-                return Task.FromResult(new GetContactListQuery());
+                return Task.FromResult(new GetContactsQuery());
             }
             throw new ArgumentException("Contact is invalid!");
         }
