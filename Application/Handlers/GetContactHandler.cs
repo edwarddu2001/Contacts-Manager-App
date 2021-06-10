@@ -29,5 +29,6 @@ namespace Application.Handlers
         {
             return Task.FromResult(_data.GetContacts(_mapper.Map<Contacts>(request.contact));
         }
+
     }
 }
