@@ -56,8 +56,8 @@
 
     private async Task RemoveButtonClicked(string Name, PhoneAttribute PhoneNumber)
     {
-
-        contacts = await _mediator.Send(new RemoveContactsHander(Contact));
+        //TODO: pass correct contact with given attributes
+        contacts = await _mediator.Send(new RemoveContactsHander(contact));
     }
 }
 @*
