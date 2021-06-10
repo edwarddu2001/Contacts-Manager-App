@@ -6,11 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain.Models;
 
 namespace Application.QueryAndHandle
 {
     public class Handler : IRequestHandler<Query, List<Contacts>>
     {
+        private readonly IRepository _data;
+        public Handler(ContactsAccess data)
+        {
+            _data = data;
+        }
+        public Task<List<Contacts>> Handle(Query request, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(_data.AddContacts());
+        }
+
+        /**
         private Repository contacts;
         public Handler(Repository contacts)
         {
@@ -25,14 +37,6 @@ namespace Application.QueryAndHandle
             // Maybe make seperate files for cqrs?
             return Task.FromResult(contacts.AddContacts());
         }
-
-        public Handler(IDataAcess )
-        {
-
-        }
-        public Task<List<Contacts>> Handle(Query request, CancellationToken cancellationToken)
-        {
-            return 
-        }
+        **/
     }
 }

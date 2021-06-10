@@ -6,14 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain.Models
 
 namespace Application.QueryAndHandle
 {
     public class Query
     {
-        // automapping between model/viewmodel here probably, by dependency between Application and WebUI
+        // automapping between model/viewmodel in application, by dependency between Application and WebUI
         public record Command() : IRequest<List<Contacts>>;
-
-        public record Response(string Name, string PhoneNumber);
     }
 }

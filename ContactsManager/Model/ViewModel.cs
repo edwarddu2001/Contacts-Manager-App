@@ -14,7 +14,6 @@ namespace ContactsManager.Model
 
         [Required(ErrorMessage = "Phone number is required")]
         [Phone]
-        // Phone instead of string?
-        public string PhoneNumber { get; set; }
+        public PhoneAttribute PhoneNumber { get; set; }
     }
 }
