@@ -15,7 +15,7 @@ using Application.ViewModels;
 
 namespace Application.Handlers
 {
-    public class AddContactHandler : IRequestHandler<AddContactCommand, List<ContactsViewModel>>
+    public class AddContactHandler : IRequestHandler<AddContactCommand, bool>
     {
         private readonly IRepository _data;
         private readonly IMapper _mapper;
@@ -26,15 +26,9 @@ namespace Application.Handlers
             _mapper = mapper;
         }
 
-        public Task<List<ContactsViewModel>> Handle(AddContactCommand request, CancellationToken cancellationToken)
+        public Task<bool> Handle(AddContactCommand request, CancellationToken cancellationToken)
         {
-            var addCommandSuccess = _data.AddContacts(_mapper.Map<Contacts>(request.contact));
-
-            if (addCommandSuccess)
-            {
-                return Task.FromResult(GetContactsQuery());
-            }
-            throw new ArgumentException("Contact is invalid!");
+            return Task.FromResult(_data.AddContacts(_mapper.Map<Contacts>(request.contact)));
         }
     }
 }

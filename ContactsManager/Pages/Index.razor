@@ -55,8 +55,12 @@
             Name = name,
             PhoneNum = phoneNumber
         };
-        await _mediator.Send(new AddContactCommand(newContact));
-        await UpdateList();
+        bool response = await _mediator.Send(new AddContactCommand(newContact));
+        if (response)
+        {
+            await UpdateList();
+        }
+        throw new ArgumentException("Contact is not valid");
     }
 
     private async Task RemoveButtonClicked(string Name, PhoneAttribute PhoneNumber)
@@ -66,7 +70,11 @@
             Name = Name,
             PhoneNum = PhoneNumber
         };
-        await _mediator.Send(new RemoveContactCommand(newContact));
-        await UpdateList();
+        bool response = await _mediator.Send(new RemoveContactCommand(newContact));
+        if (response)
+        {
+            await UpdateList();
+        }
+        throw new ArgumentException("Contact does not exist");
     }
 }
