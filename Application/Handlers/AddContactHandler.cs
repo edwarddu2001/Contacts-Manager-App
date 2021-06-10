@@ -9,24 +9,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Domain.Models;
 using System.ComponentModel.DataAnnotations;
+using AutoMapper;
+using Application.ViewModels;
 
 namespace Application.Handlers
 {
-    public class AddContactHandler : IRequestHandler<AddContactCommand, List<Contacts>>
+    public class AddContactHandler : IRequestHandler<AddContactCommand, List<ContactsViewModel>>
     {
         private readonly IRepository _data;
-        private readonly Contacts _contact;
+        private readonly IMapper _mapper;
 
-        public AddContactHandler(IRepository data, Contacts contact)
+        public AddContactHandler(IRepository data, ContactsViewModel contact, IMapper mapper)
         {
             _data = data;
-            _contact = contact;
+            _mapper = mapper;
         }
 
-        public Task<List<Contacts>> Handle(AddContactCommand request, CancellationToken cancellationToken)
+        public Task<List<ContactsViewModel>> Handle(AddContactCommand request, CancellationToken cancellationToken)
         {
+            var addCommandSuccess = _data.AddContacts(_mapper.Map<Contacts>(request.contact));
 
-            return Task.FromResult(_data.AddContacts(_contact));
+            if (addCommandSuccess)
+            {
+                return Task.FromResult(new GetContactListQuery());
+            }
         }
     }
 }
