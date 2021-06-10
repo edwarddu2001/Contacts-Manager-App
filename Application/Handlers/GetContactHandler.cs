@@ -2,6 +2,7 @@
 using Application.Repositories;
 using Application.ViewModels;
 using AutoMapper;
+using Domain.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers
 {
-    public class GetContactHandler : IRequestHandler<Query, List<ContactsViewModel>>
+    public class GetContactHandler : IRequestHandler<GetContactsQuery, List<ContactsViewModel>>
     {
         private readonly IRepository _data;
         private readonly IMapper _mapper;
@@ -25,9 +26,16 @@ namespace Application.Handlers
             _contact = contact;
         }
 
-        public Task<List<ContactsViewModel>> Handle(Query request, CancellationToken cancellationToken)
+        public Task<List<ContactsViewModel>> Handle(GetContactsQuery request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_data.GetContacts(_mapper.Map<Contacts>(request.contact));
+            List<Contacts> listofContacts = _data.GetContacts(_mapper.Map<Contacts>(request.contact));
+            List<ContactsViewModel> contactsViewModel = new();
+            for(int i = 0; i < listofContacts.Count; i++)
+            {
+                listofContacts[i].Name = contactsViewModel[i].Name;
+                listofContacts[i].PhoneNum = contactsViewModel[i].PhoneNum;
+            }
+            return Task.FromResult(contactsViewModel);
         }
 
     }
