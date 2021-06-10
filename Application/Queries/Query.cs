@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Domain.Models;
 
-namespace Application.QueryAndHandle
+namespace Application.Queries
 {
     // automapping between model/viewmodel in application, by dependency between Application and WebUI
     public record Query() : IRequest<List<Contacts>>;

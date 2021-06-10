@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MudBlazor.Services;
-
+using MediatR;
 
 namespace ContactsManager
 {
@@ -31,6 +31,7 @@ namespace ContactsManager
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMudServices();
+            services.AddMediatR(typeof(Application.Handlers.AddContactHandler).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ContactsManager.ViewModels
+namespace Application.ViewModels
 {
     public class ContactsViewModel
     {
