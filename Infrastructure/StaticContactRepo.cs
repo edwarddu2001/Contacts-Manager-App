@@ -13,21 +13,29 @@ namespace Infrastructure
 
         public List<Contacts> AddContacts(string name, string phoneNumber)
         {
-            if (!(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phoneNumber)))
+            if (!string.IsNullOrEmpty(name))
             {
-                contactsList.Add(new Contacts()
+                if (!string.IsNullOrEmpty(phoneNumber))
                 {
-                    Name = name,
-                    PhoneNumber = phoneNumber
-                });
+                    contactsList.Add(new Contacts()
+                    {
+                        Name = name,
+                        PhoneNumber = phoneNumber
+                    });
+                    return contactsList;
+                }
+                throw new ArgumentException("Phone Number is Empty!");
             }
-            return contactsList;
+            throw new ArgumentException("Name is Empty!");
         }
 
         public List<Contacts> RemoveContacts(Contacts contact)
         {
-            contactsList.Remove(contact);
-            return contactsList;
+            if (contactsList.Remove(contact))
+            {
+                return contactsList;
+            }
+            throw new ArgumentException("Contact does not exist!");
         }
     }
 }
