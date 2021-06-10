@@ -30,7 +30,7 @@ namespace Application.Handlers
             var addCommandSuccess = _data.RemoveContacts(_mapper.Map<Contacts>(request.contact));
 
             if (addCommandSuccess)
-            {
+    {
                 return Task.FromResult(new GetContactListQuery());
             }
             throw new ArgumentException("Contact is invalid!");
