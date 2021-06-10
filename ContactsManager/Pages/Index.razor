@@ -40,7 +40,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        UpdateList();
+        await UpdateList();
     }
 
     private async Task UpdateList()
@@ -56,7 +56,7 @@
             PhoneNum = phoneNumber
         };
         await _mediator.Send(new AddContactCommand(newContact));
-        await UpdateList();
+        UpdateList();
     }
 
     private async Task RemoveButtonClicked(string Name, PhoneAttribute PhoneNumber)
@@ -67,6 +67,6 @@
             PhoneNum = PhoneNumber
         };
         await _mediator.Send(new RemoveContactCommand(newContact));
-        await UpdateList();
+        UpdateList();
     }
 }
