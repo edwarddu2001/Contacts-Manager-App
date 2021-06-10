@@ -34,14 +34,13 @@
 @code {
     public string name;
     public string phoneNumber;
-    Repository repository = new();
-    List<Contacts> contact;
+    Contacts contact = new();
 
     protected override async Task OnInitializedAsync()
     {
         // Maybe:
         IMediator _mediator;
-        contact = await _mediator.Send(new ContactsHandler());
+        contact = await _mediator.Send(new Query());
     }
 
     private void AddButtonClicked()
