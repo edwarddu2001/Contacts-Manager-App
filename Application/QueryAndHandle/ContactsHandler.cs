@@ -1,4 +1,4 @@
-﻿using Application.Repository;
+﻿using Application.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.QueryAndCommand
+namespace Application.QueryAndHandle
 {
     public class ContactsHandler
     {
@@ -28,7 +28,7 @@ namespace Application.QueryAndCommand
                 // error because it needs to return Task<Response> not List<Contacts>.
                 // After changing that, TRequest and TResponse needs to be changed in IRequestHandler
                 // Maybe make seperate files for cqrs?
-                return Task.FromResult(contacts.GetContacts());
+                return Task.FromResult(contacts.AddContacts());
             }
         }
 

@@ -3,15 +3,14 @@
 
 <MudCard Elevation="25" Class="my-5">
     <MudCardContent>
-        <MudTextField @bind-Value="firstName" Label="First Name" Variant="Variant.Text"></MudTextField>
-        <MudTextField @bind-Value="lastName" Label="Last Name" Variant="Variant.Text"></MudTextField>
+        <MudTextField @bind-Value="name" Label="First Name" Variant="Variant.Text"></MudTextField>
         <MudTextField @bind-Value="phoneNumber" Label="Phone Number" Variant="Variant.Text"></MudTextField>
         <br />
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddButtonClicked">Add</MudButton>
     </MudCardContent>
 </MudCard>
 
-<MudTable Items="@contactsList" Hover="true" Elevation="25" Class="my-5">
+<MudTable Items="@repository" Hover="true" Elevation="25" Class="my-5">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Contacts</MudText>
     </ToolBarContent>
@@ -21,7 +20,9 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Name">Joe Bob</MudTd>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveButtonClicked">Add</MudButton>
         <MudTd DataLabel="PhoneNumber">555-555-5555</MudTd>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveButtonClicked">Add</MudButton>
         <MudTd>
             <MudFab Color="Color.Secondary" Icon="@Icons.Material.Filled.Close" Size="Size.Small"></MudFab>
         </MudTd>
@@ -31,20 +32,26 @@
 <br />
 
 @code {
-    //@Imports Application namespace needed
-    public string firstName { get; set; }
-    public string lastName { get; set; }
-    public string phoneNumber { get; set; }
-    public List<Contacts> contactsList;
+    public string name;
+    public string phoneNumber;
+    Repository repository = new();
+    List<Contacts> contact;
 
     protected override async Task OnInitializedAsync()
     {
-        // once imported: List<Contacts> contact = await _mediator.Send(new (Query class from Application());
+        // Maybe:
+        IMediator _mediator;
+        contact = await _mediator.Send(new ContactsHandler());
     }
 
     private void AddButtonClicked()
     {
+        repository.AddContacts(name, phoneNumber);
+    }
 
+    private void RemoveButtonClicked()
+    {
+        //repository.RemoveContacts();
     }
 }
     @*
