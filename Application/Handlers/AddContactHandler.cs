@@ -20,7 +20,7 @@ namespace Application.Handlers
         private readonly IRepository _data;
         private readonly IMapper _mapper;
 
-        public AddContactHandler(IRepository data, ContactsViewModel contact, IMapper mapper)
+        public AddContactHandler(IRepository data, IMapper mapper)
         {
             _data = data;
             _mapper = mapper;
