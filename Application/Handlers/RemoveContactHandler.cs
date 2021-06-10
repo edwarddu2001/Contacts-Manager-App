@@ -14,12 +14,12 @@ using Application.ViewModels;
 
 namespace Application.Handlers
 {
-    public class AddContactHandler : IRequestHandler<AddContactCommand, List<ContactsViewModel>>
+    public class RemoveContactHandler : IRequestHandler<AddContactCommand, List<ContactsViewModel>>
     {
         private readonly IRepository _data;
         private readonly IMapper _mapper;
 
-        public AddContactHandler(IRepository data, ContactsViewModel contact, IMapper mapper)
+        public RemoveContactHandler(IRepository data, ContactsViewModel contact, IMapper mapper)
         {
             _data = data;
             _mapper = mapper;
@@ -27,7 +27,7 @@ namespace Application.Handlers
 
         public Task<List<ContactsViewModel>> Handle(AddContactCommand request, CancellationToken cancellationToken)
         {
-            var addCommandSuccess = _data.AddContacts(_mapper.Map<Contacts>(request.contact));
+            var addCommandSuccess = _data.RemoveContacts(_mapper.Map<Contacts>(request.contact));
 
             if (addCommandSuccess)
             {
