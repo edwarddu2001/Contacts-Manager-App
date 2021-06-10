@@ -1,6 +1,5 @@
 ﻿@page "/"
-@using Domain.Models
-@using System.ComponentModel.DataAnnotations;
+@using System.ComponentModel.DataAnnotations
 @inject MediatR.IMediator _mediator
 
 <MudCard Elevation="25" Class="my-5">
@@ -36,7 +35,6 @@
 
 @code {
     public string name;
-    public string phoneNumber;
     public PhoneAttribute phoneNumber;
     List<ContactsViewModel> contacts = new();
 
@@ -45,17 +43,6 @@
         contacts = await _mediator.Send(new GetContactsHandler());
     }
 
-    /**
-    if (!(string.IsNullOrEmpty(name) && string.IsNullOrEmpty(phoneNumber)))
-      {
-        // do something
-      }
-      throw new ArgumentException("Name is Empty!");
-    **/
-
-    private void AddButtonClicked()
-    {
-        repository.AddContacts(name, phoneNumber);
     private async Task AddButtonClicked()
     {
         ContactsViewModel newContact = new ContactsViewModel()
@@ -72,92 +59,3 @@
         contacts = await _mediator.Send(new RemoveContactsHander(contact));
     }
 }
-@*
-            // the .razor file
-                    @page "/contactManager"
-            <h3>Contact Manager</h3>
-
-            <input type="text" placeholder="Name..." @bind="name" />
-            <input type="text" placeholder="Phone number..." @bind="phoneNumber" />
-            <button type="button" @onclick="AddContact">Add</button>
-
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Phone Number</th>
-                </tr>
-                @foreach (var contact in contactsList)
-                {
-                    <tr>
-                        <td>@contact.Name</td>
-                        <td>@contact.PhoneNumber</td>
-                        <td><button type="button">X</button></td>
-                    </tr>
-                }
-            </table>
-
-            @code {
-                Contacts contacts = new Contacts();
-                private List<Contacts> contactsList = new List<Contacts>();
-                private string name;
-                private string phoneNumber;
-
-                private void AddContact()
-                {
-                    if (!(string.IsNullOrEmpty(name) && string.IsNullOrEmpty(phoneNumber)))
-                    {
-                        contactsList.Add(new Contacts()
-                        {
-                            Name = name,
-                            PhoneNumber = phoneNumber
-                        });
-                        name = string.Empty;
-                        phoneNumber = string.Empty;
-                    }
-                }
-            }
-
-    // the .cs file
-            using System;
-    using System.ComponentModel.DataAnnotations;
-
-    namespace ContactManagerApp
-    {
-        public class Contacts
-        {
-            [Required(ErrorMessage = "Name is required")]
-            [StringLength(15, ErrorMessage = "Name is too long")]
-            public string Name{ get; set; }
-
-            [Required(ErrorMessage ="Phone number is required")]
-            [Phone]
-            public string PhoneNumber { get; set; }
-        }
-        //
-    }
-
-    /**
-    private Repository contacts;
-    public Handler(Repository contacts)
-    {
-        this.contacts = contacts;
-    }
-            [Required(ErrorMessage ="Phone number is required")]
-            [Phone]
-            public string PhoneNumber { get; set; }
-        }
-        //
-    }
-
-    public Task<Response> Handle(Command request, CancellationToken cancellationToken)
-    {
-        // how to access name and phoneNumber to give to Repository?
-        // error because it needs to return Task<Response> not List<Contacts>.
-        // After changing that, TRequest and TResponse needs to be changed in IRequestHandler
-        // Maybe make seperate files for cqrs?
-        return Task.FromResult(contacts.AddContacts());
-    }
-    **/
-
-*@
-*@
