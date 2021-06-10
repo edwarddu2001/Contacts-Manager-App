@@ -17,23 +17,20 @@ namespace Application.Handlers
     {
         private readonly IRepository _data;
         private readonly IMapper _mapper;
-        private readonly ContactsViewModel _contact;
 
-        public GetContactHandler(IRepository data, ContactsViewModel contact, IMapper mapper)
+        public GetContactHandler(IRepository data, IMapper mapper)
         {
             _data = data;
             _mapper = mapper;
-            _contact = contact;
         }
 
         public Task<List<ContactsViewModel>> Handle(GetContactsQuery request, CancellationToken cancellationToken)
         {
-            List<Contacts> listofContacts = _data.GetContacts(_mapper.Map<Contacts>(request.contact));
+            List<Contacts> listofContacts = _data.GetContacts();
             List<ContactsViewModel> contactsViewModel = new();
             for(int i = 0; i < listofContacts.Count; i++)
             {
-                listofContacts[i].Name = contactsViewModel[i].Name;
-                listofContacts[i].PhoneNum = contactsViewModel[i].PhoneNum;
+                contactsViewModel[i] = _mapper.Map<ContactsViewModel>(listofContacts[i]);
             }
             return Task.FromResult(contactsViewModel);
         }

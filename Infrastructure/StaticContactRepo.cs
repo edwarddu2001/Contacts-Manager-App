@@ -32,7 +32,7 @@ namespace Infrastructure
             return false;
         }
 
-        public List<Contacts> GetContacts(Contacts contact)
+        public List<Contacts> GetContacts()
         {
             return contactsList;
         }

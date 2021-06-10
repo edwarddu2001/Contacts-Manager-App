@@ -11,7 +11,7 @@ namespace Application.Repositories
 
         public bool RemoveContacts(Contacts contact);
 
-        public List<Contacts> GetContacts(Contacts contact);
+        public List<Contacts> GetContacts();
 
     }
 }
