@@ -7,7 +7,7 @@ namespace Application.Repositories
 {
     public interface IRepository
     {
-        public List<Contacts> AddContacts(string name, PhoneAttribute phoneNumber);
+        public List<Contacts> AddContacts(Contacts contact);
 
         public List<Contacts> RemoveContacts(Contacts contact);
     }

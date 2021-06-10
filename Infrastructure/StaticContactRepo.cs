@@ -13,18 +13,10 @@ namespace Infrastructure
     {
         private static List<Contacts> contactsList = new();
 
-        public List<Contacts> AddContacts(string name, PhoneAttribute phoneNumber)
+        public List<Contacts> AddContacts(Contacts contact)
         {
-            if (!string.IsNullOrEmpty(name))
-            {
-                contactsList.Add(new Contacts()
-                {
-                    Name = name,
-                    PhoneNum = phoneNumber
-                });
-                return contactsList;
-            }
-            throw new ArgumentException("Name is Empty!");
+            contactsList.Add(contact);
+            return contactsList;
         }
 
         public List<Contacts> RemoveContacts(Contacts contact)
