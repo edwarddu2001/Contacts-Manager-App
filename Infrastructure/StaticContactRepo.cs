@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,32 @@ namespace Infrastructure
 {
     public class StaticContactRepo : IRepository
     {
-        private static List<Contacts> contactsList = new List<Contacts>();
+        private List<Contacts> contactsList = new();
+
+        // dummy GetContacts(), remove after handeler fixed
+        public List<Contacts> AddContacts()
+        {
+            List<Contacts> contacts = new();
+            return contacts;
+        }
 
         public List<Contacts> AddContacts(string name, string phoneNumber)
         {
-            throw new NotImplementedException();
+            if (!(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phoneNumber)))
+            {
+                contactsList.Add(new Contacts()
+                {
+                    Name = name,
+                    PhoneNumber = phoneNumber
+                });
+            }
+            return contactsList;
         }
 
         public List<Contacts> RemoveContacts(Contacts contact)
         {
-            throw new NotImplementedException();
+            contactsList.Remove(contact);
+            return contactsList;
         }
     }
 }
