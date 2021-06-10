@@ -1,9 +1,11 @@
-﻿using Application.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Repositories;
+using Domain.Models;
 
 namespace Infrastructure
 {
@@ -11,20 +13,16 @@ namespace Infrastructure
     {
         private static List<Contacts> contactsList = new();
 
-        public List<Contacts> AddContacts(string name, string phoneNumber)
+        public List<Contacts> AddContacts(string name, PhoneAttribute phoneNumber)
         {
             if (!string.IsNullOrEmpty(name))
             {
-                if (!string.IsNullOrEmpty(phoneNumber))
+                contactsList.Add(new Contacts()
                 {
-                    contactsList.Add(new Contacts()
-                    {
-                        Name = name,
-                        PhoneNumber = phoneNumber
-                    });
-                    return contactsList;
-                }
-                throw new ArgumentException("Phone Number is Empty!");
+                    Name = name,
+                    PhoneNum = phoneNumber
+                });
+                return contactsList;
             }
             throw new ArgumentException("Name is Empty!");
         }
