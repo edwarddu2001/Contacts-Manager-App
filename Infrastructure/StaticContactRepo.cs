@@ -13,19 +13,19 @@ namespace Infrastructure
     {
         private static List<Contacts> contactsList = new();
 
-        public List<Contacts> AddContacts(Contacts contact)
+        public bool AddContacts(Contacts contact)
         {
             contactsList.Add(contact);
-            return contactsList;
+            return true;
         }
 
-        public List<Contacts> RemoveContacts(Contacts contact)
+        public bool RemoveContacts(Contacts contact)
         {
             if (contactsList.Remove(contact))
             {
-                return contactsList;
+                return true;
             }
-            throw new ArgumentException("Contact does not exist!");
+            return false;
         }
     }
 }

@@ -7,8 +7,8 @@ namespace Application.Repositories
 {
     public interface IRepository
     {
-        public List<Contacts> AddContacts(Contacts contact);
+        public bool AddContacts(Contacts contact);
 
-        public List<Contacts> RemoveContacts(Contacts contact);
+        public bool RemoveContacts(Contacts contact);
     }
 }

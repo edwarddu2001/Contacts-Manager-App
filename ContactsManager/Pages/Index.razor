@@ -40,7 +40,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        contacts = await _mediator.Send(new GetContactsHandler());
+        contacts = await _mediator.Send(new GetContactsQuery());
     }
 
     private async Task AddButtonClicked()
@@ -50,12 +50,12 @@
             Name = name,
             PhoneNum = phoneNumber
         };
-        contacts = await _mediator.Send(new AddContactHandler(newContact));
+        contacts = await _mediator.Send(new AddContactCommand(newContact));
     }
 
     private async Task RemoveButtonClicked(string Name, PhoneAttribute PhoneNumber)
     {
         //TODO: pass correct contact with given attributes
-        contacts = await _mediator.Send(new RemoveContactsHander(contact));
+        contacts = await _mediator.Send(new RemoveContactCommand(contact));
     }
 }
