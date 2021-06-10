@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ContactsManager.Model
+namespace ContactsManager.ViewModels
 {
-    public class ViewModel
+    public class ContactsViewModel
     {
         [Required(ErrorMessage = "Name is required")]
         [StringLength(15, ErrorMessage = "Name is too long")]
@@ -14,7 +14,6 @@ namespace ContactsManager.Model
 
         [Required(ErrorMessage = "Phone number is required")]
         [Phone]
-        // Phone instead of string?
-        public string PhoneNumber { get; set; }
+        public PhoneAttribute PhoneNum { get; set; }
     }
 }

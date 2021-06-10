@@ -1,16 +1,18 @@
 ﻿@page "/"
+@using Domain.Models
+@using System.ComponentModel.DataAnnotations;
 @inject MediatR.IMediator _mediator
 
 <MudCard Elevation="25" Class="my-5">
     <MudCardContent>
-        <MudTextField @bind-Value="name" Label="First Name" Variant="Variant.Text"></MudTextField>
+        <MudTextField @bind-Value="name" Label="Name" Variant="Variant.Text"></MudTextField>
         <MudTextField @bind-Value="phoneNumber" Label="Phone Number" Variant="Variant.Text"></MudTextField>
         <br />
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddButtonClicked">Add</MudButton>
     </MudCardContent>
 </MudCard>
 
-<MudTable Items="@repository" Hover="true" Elevation="25" Class="my-5">
+<MudTable Items="@contacts" Hover="true" Elevation="25" Class="my-5">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Contacts</MudText>
     </ToolBarContent>
@@ -19,13 +21,14 @@
         <MudTh>Phone Number</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Name">Joe Bob</MudTd>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveButtonClicked">Add</MudButton>
-        <MudTd DataLabel="PhoneNumber">555-555-5555</MudTd>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveButtonClicked">Add</MudButton>
-        <MudTd>
-            <MudFab Color="Color.Secondary" Icon="@Icons.Material.Filled.Close" Size="Size.Small"></MudFab>
-        </MudTd>
+        @foreach (var contact in contacts)
+        {
+            <MudTd DataLabel="Name">@contact.Name</MudTd>
+            <MudTd DataLabel="PhoneNumber">@contact.PhoneNum</MudTd>
+            <MudTd>
+                <MudFab Color="Color.Secondary" Icon="@Icons.Material.Filled.Close" Size="Size.Small" OnClick="@(()=>RemoveButtonClicked(@contact.Name, @contact.PhoneNum))"></MudFab>
+            </MudTd>
+        }
     </RowTemplate>
 </MudTable>
 
@@ -33,88 +36,92 @@
 
 @code {
     public string name;
-    public string phoneNumber;
-    Contacts contact = new();
+    public PhoneAttribute phoneNumber;
+    List<ContactsViewModel> contacts = new();
 
     protected override async Task OnInitializedAsync()
     {
-        // Maybe:
-        IMediator _mediator;
-        contact = await _mediator.Send(new Query());
+        contacts = await _mediator.Send(new GetContactsHandler());
     }
 
-    private void AddButtonClicked()
+    private async Task AddButtonClicked()
     {
-        repository.AddContacts(name, phoneNumber);
+        ContactsViewModel newContact = new ContactsViewModel()
+        {
+            Name = name,
+            PhoneNum = phoneNumber
+        };
+        contacts = await _mediator.Send(new AddContactHandler(newContact));
     }
 
-    private void RemoveButtonClicked()
+    private async Task RemoveButtonClicked(string Name, PhoneAttribute PhoneNumber)
     {
-        //repository.RemoveContacts();
+
+        contacts = await _mediator.Send(new RemoveContactsHander(Contact));
     }
 }
-    @*
-                // the .razor file
-                        @page "/contactManager"
-                <h3>Contact Manager</h3>
+@*
+            // the .razor file
+                    @page "/contactManager"
+            <h3>Contact Manager</h3>
 
-                <input type="text" placeholder="Name..." @bind="name" />
-                <input type="text" placeholder="Phone number..." @bind="phoneNumber" />
-                <button type="button" @onclick="AddContact">Add</button>
+            <input type="text" placeholder="Name..." @bind="name" />
+            <input type="text" placeholder="Phone number..." @bind="phoneNumber" />
+            <button type="button" @onclick="AddContact">Add</button>
 
-                <table>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                </tr>
+                @foreach (var contact in contactsList)
+                {
                     <tr>
-                        <th>Name</th>
-                        <th>Phone Number</th>
+                        <td>@contact.Name</td>
+                        <td>@contact.PhoneNumber</td>
+                        <td><button type="button">X</button></td>
                     </tr>
-                    @foreach (var contact in contactsList)
-                    {
-                        <tr>
-                            <td>@contact.Name</td>
-                            <td>@contact.PhoneNumber</td>
-                            <td><button type="button">X</button></td>
-                        </tr>
-                    }
-                </table>
+                }
+            </table>
 
-                @code {
-                    Contacts contacts = new Contacts();
-                    private List<Contacts> contactsList = new List<Contacts>();
-                    private string name;
-                    private string phoneNumber;
+            @code {
+                Contacts contacts = new Contacts();
+                private List<Contacts> contactsList = new List<Contacts>();
+                private string name;
+                private string phoneNumber;
 
-                    private void AddContact()
+                private void AddContact()
+                {
+                    if (!(string.IsNullOrEmpty(name) && string.IsNullOrEmpty(phoneNumber)))
                     {
-                        if (!(string.IsNullOrEmpty(name) && string.IsNullOrEmpty(phoneNumber)))
+                        contactsList.Add(new Contacts()
                         {
-                            contactsList.Add(new Contacts()
-                            {
-                                Name = name,
-                                PhoneNumber = phoneNumber
-                            });
-                            name = string.Empty;
-                            phoneNumber = string.Empty;
-                        }
+                            Name = name,
+                            PhoneNumber = phoneNumber
+                        });
+                        name = string.Empty;
+                        phoneNumber = string.Empty;
                     }
                 }
-
-        // the .cs file
-                using System;
-        using System.ComponentModel.DataAnnotations;
-
-        namespace ContactManagerApp
-        {
-            public class Contacts
-            {
-                [Required(ErrorMessage = "Name is required")]
-                [StringLength(15, ErrorMessage = "Name is too long")]
-                public string Name{ get; set; }
-
-                [Required(ErrorMessage ="Phone number is required")]
-                [Phone]
-                public string PhoneNumber { get; set; }
             }
-            //
-        }
 
-    *@
+    // the .cs file
+            using System;
+    using System.ComponentModel.DataAnnotations;
+
+    namespace ContactManagerApp
+    {
+        public class Contacts
+        {
+            [Required(ErrorMessage = "Name is required")]
+            [StringLength(15, ErrorMessage = "Name is too long")]
+            public string Name{ get; set; }
+
+            [Required(ErrorMessage ="Phone number is required")]
+            [Phone]
+            public string PhoneNumber { get; set; }
+        }
+        //
+    }
+
+*@
