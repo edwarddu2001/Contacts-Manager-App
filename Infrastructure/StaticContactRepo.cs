@@ -4,20 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Application.Repositories
 
 namespace Infrastructure
 {
     public class StaticContactRepo : IRepository
     {
-        private List<Contacts> contactsList = new();
-
-        // dummy GetContacts(), remove after handeler fixed
-        public List<Contacts> AddContacts()
-        {
-            List<Contacts> contacts = new();
-            return contacts;
-        }
+        private static List<Contacts> contactsList = new();
 
         public List<Contacts> AddContacts(string name, string phoneNumber)
         {
