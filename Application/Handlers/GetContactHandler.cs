@@ -2,6 +2,7 @@
 using Application.Repositories;
 using Application.ViewModels;
 using AutoMapper;
+using Domain.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,14 @@ namespace Application.Handlers
 
         public Task<List<ContactsViewModel>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_data.GetContacts(_mapper.Map<Contacts>(request.contact));
+            List<Contacts> listOfContacts = _data.GetContacts(_mapper.Map<Contacts>(request.contact));
+            List<ContactsViewModel> contactsViewModel = new();
+            for(int i = 0; i < listOfContacts.Count; i++)
+            {
+                listOfContacts[i].Name = contactsViewModel[i].Name;
+                listOfContacts[i].PhoneNum = contactsViewModel[i].PhoneNum;
+            }
+            return Task.FromResult(contactsViewModel);
         }
     }
 }
