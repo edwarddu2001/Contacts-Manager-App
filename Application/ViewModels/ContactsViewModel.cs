@@ -14,6 +14,6 @@ namespace Application.ViewModels
 
         [Required(ErrorMessage = "Phone number is required")]
         [Phone]
-        public PhoneAttribute PhoneNum { get; set; }
+        public string PhoneNum { get; set; }
     }
 }

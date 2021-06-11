@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/contactManager"
 @using System.ComponentModel.DataAnnotations
 @inject MediatR.IMediator _mediator
 
@@ -35,7 +35,7 @@
 
 @code {
     public string name;
-    public PhoneAttribute phoneNumber;
+    public string phoneNumber;
     List<ContactsViewModel> contacts = new();
 
     protected override async Task OnInitializedAsync()
@@ -63,7 +63,7 @@
         throw new ArgumentException("Contact is not valid");
     }
 
-    private async Task RemoveButtonClicked(string Name, PhoneAttribute PhoneNumber)
+    private async Task RemoveButtonClicked(string Name, string PhoneNumber)
     {
         ContactsViewModel newContact = new ContactsViewModel()
         {
