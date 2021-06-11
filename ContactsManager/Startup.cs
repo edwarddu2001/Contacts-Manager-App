@@ -33,7 +33,7 @@ namespace ContactsManager
             services.AddMudServices();
             services.AddMediatR(typeof(Application.Handlers.AddContactHandler).Assembly);
             services.AddSingleton<Application.Repositories.IRepository, Infrastructure.StaticContactRepo>();
-            services.AddAutoMapper(typeof(Application.Profiles.ContactsProfile).Assembly);
+            services.AddAutoMapper(typeof(Application.Profiles.ContactstoContactsVM));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

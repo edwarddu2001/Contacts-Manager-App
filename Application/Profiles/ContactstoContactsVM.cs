@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Application.Profiles
 {
-    public class ContactsProfile : Profile
+    public class ContactstoContactsVM : Profile
     {
-        public ContactsProfile()
+        public ContactstoContactsVM()
         {
             CreateMap<Contacts, ContactsViewModel>();
         }
