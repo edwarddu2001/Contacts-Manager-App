@@ -27,12 +27,7 @@ namespace Application.Handlers
         public Task<List<ContactsViewModel>> Handle(GetContactsQuery request, CancellationToken cancellationToken)
         {
             List<Contacts> listofContacts = _data.GetContacts();
-            List<ContactsViewModel> contactsViewModel = new();
-            for(int i = 0; i < listofContacts.Count; i++)
-            {
-                contactsViewModel[i] = _mapper.Map<ContactsViewModel>(listofContacts[i]);
-            }
-            return Task.FromResult(contactsViewModel);
+            return Task.FromResult(_mapper.Map<List<ContactsViewModel>>(listofContacts));
         }
 
     }
