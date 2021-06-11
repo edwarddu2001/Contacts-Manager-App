@@ -28,6 +28,10 @@
         <MudTd DataLabel="PhoneNumber">@context.PhoneNum</MudTd>
         <MudTd>
             <MudFab Color="Color.Secondary" Icon="@Icons.Material.Filled.Close" Size="Size.Small" OnClick="@(()=>RemoveButtonClicked(@context.Name, @context.PhoneNum))"></MudFab>
+            @if (@removeError)
+            {
+                <MudAlert Severity="Severity.Error" Class="mt-5">@errorMessage</MudAlert>
+            }
         </MudTd>
     </RowTemplate>
 </MudTable>
@@ -42,15 +46,25 @@
 
     private ContactsViewModel contact = new();
     private List<ContactsViewModel> contacts = new();
+    private bool addError;
+    private bool removeError;
+    private string errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
+        ResetErrors();
         await UpdateList();
     }
 
     private async Task UpdateList()
     {
         contacts = await _mediator.Send(new GetContactsQuery());
+    }
+
+    private void ResetErrors()
+    {
+        addError = false;
+        removeError = false;
     }
 
     private async Task AddButtonClicked()
@@ -64,13 +78,20 @@
             }
             else
             {
-                throw new ArgumentException("Contact is not valid");
+                addError = true;
+                errorMessage = "Contact already exists";
             }
+        } else
+        {
+            addError = true;
+            errorMessage = "Empty fields";
         }
     }
 
     private async Task RemoveButtonClicked(string Name, string PhoneNumber)
     {
+        ResetErrors();
+
         ContactsViewModel newContact = new ContactsViewModel()
         {
             Name = Name,
@@ -83,7 +104,8 @@
         }
         else
         {
-            throw new ArgumentException("Contact does not exist");
+            removeError = true;
+            errorMessage = "Contact does not exist";
         }
     }
 }

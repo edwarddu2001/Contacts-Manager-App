@@ -1,7 +1,5 @@
-﻿using Application.Repositories;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Domain.Models;
-using System.ComponentModel.DataAnnotations;
 
 namespace Application.Repositories
 {
