@@ -2,7 +2,7 @@
 @inject MediatR.IMediator _mediator
 @using System.ComponentModel.DataAnnotations
 
-<EditForm Model="@contact" OnValidSubmit="OnValidSubmit">
+<EditForm Model="@contact" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
     <DataAnnotationsValidator/>
     <MudCard Elevation="25" Class="my-5">
         <MudCardContent>
@@ -41,7 +41,12 @@
 @code {
     private void OnValidSubmit(EditContext context)
     {
-        //StateHasChanged();
+        StateHasChanged();
+    }
+
+    private void OnInvalidSubmit(EditContext context)
+    {
+        StateHasChanged();
     }
 
     private ContactsViewModel contact = new();
