@@ -1,6 +1,5 @@
 ﻿using Application.Repositories;
 using Application.Commands;
-using Application.Queries;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,9 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Models;
-using System.ComponentModel.DataAnnotations;
 using AutoMapper;
-using Application.ViewModels;
 
 namespace Application.Handlers
 {
