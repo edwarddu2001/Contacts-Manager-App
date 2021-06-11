@@ -7,6 +7,10 @@
         <MudTextField @bind-Value="@contact.PhoneNum" Label="Phone Number" Variant="Variant.Text"></MudTextField>
         <br />
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddButtonClicked">Add</MudButton>
+        @if (@addError)
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-5">@errorMessage</MudAlert>
+        }
     </MudCardContent>
 </MudCard>
 
@@ -23,6 +27,10 @@
         <MudTd DataLabel="PhoneNumber">@context.PhoneNum</MudTd>
         <MudTd>
             <MudFab Color="Color.Secondary" Icon="@Icons.Material.Filled.Close" Size="Size.Small" OnClick="@(()=>RemoveButtonClicked(@context.Name, @context.PhoneNum))"></MudFab>
+            @if (@removeError)
+            {
+                <MudAlert Severity="Severity.Error" Class="mt-5">@errorMessage</MudAlert>
+            }
         </MudTd>
     </RowTemplate>
 </MudTable>
@@ -32,9 +40,13 @@
 @code {
     private ContactsViewModel contact = new();
     private List<ContactsViewModel> contacts = new();
+    private bool addError;
+    private bool removeError;
+    private string errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
+        ResetErrors();
         await UpdateList();
     }
 
@@ -43,8 +55,16 @@
         contacts = await _mediator.Send(new GetContactsQuery());
     }
 
+    private void ResetErrors()
+    {
+        addError = false;
+        removeError = false;
+    }
+
     private async Task AddButtonClicked()
     {
+        ResetErrors();
+
         if(!(string.IsNullOrEmpty(contact.Name) || string.IsNullOrEmpty(contact.PhoneNum)))
         {
             bool response = await _mediator.Send(new AddContactCommand(contact));
@@ -54,13 +74,16 @@
             }
             else
             {
-                throw new ArgumentException("Contact is not valid");
+                addError = true;
+                errorMessage = "Contact is not valid";
             }
         }
     }
 
     private async Task RemoveButtonClicked(string Name, string PhoneNumber)
     {
+        ResetErrors();
+
         ContactsViewModel newContact = new ContactsViewModel()
         {
             Name = Name,
@@ -72,7 +95,8 @@
             await UpdateList();
         } else
         {
-            throw new ArgumentException("Contact does not exist");
+            removeError = true;
+            errorMessage = "Contact does not exist";
         }
     }
 }
