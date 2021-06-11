@@ -60,7 +60,10 @@
         {
             await UpdateList();
         }
-        throw new ArgumentException("Contact is not valid");
+        else
+        {
+            throw new ArgumentException("Contact is not valid");
+        }
     }
 
     private async Task RemoveButtonClicked(string Name, string PhoneNumber)
@@ -74,7 +77,9 @@
         if (response)
         {
             await UpdateList();
+        } else
+        {
+            throw new ArgumentException("Contact does not exist");
         }
-        throw new ArgumentException("Contact does not exist");
     }
 }
