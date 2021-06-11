@@ -12,10 +12,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using MudBlazor.Services;
 using MediatR;
-using Application.Repositories;
-using Application.Handlers;
-using Infrastructure;
-using Application.Profiles;
 
 namespace ContactsManager
 {
@@ -36,8 +32,8 @@ namespace ContactsManager
             services.AddServerSideBlazor();
             services.AddMudServices();
             services.AddMediatR(typeof(Application.Handlers.AddContactHandler).Assembly);
-            services.AddSingleton<IRepository, StaticContactRepo>();
-            services.AddAutoMapper(typeof(ContactsProfile));
+            services.AddSingleton<Application.Repositories.IRepository, Infrastructure.StaticContactRepo>();
+            services.AddAutoMapper(typeof(Application.Profiles.ContactsProfile).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
