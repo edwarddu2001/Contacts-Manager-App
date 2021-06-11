@@ -75,8 +75,12 @@
             else
             {
                 addError = true;
-                errorMessage = "Contact is not valid";
+                errorMessage = "Contact already exists";
             }
+        } else
+        {
+            addError = true;
+            errorMessage = "Empty fields";
         }
     }
 
