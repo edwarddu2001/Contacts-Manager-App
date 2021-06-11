@@ -22,7 +22,7 @@
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="PhoneNumber">@context.PhoneNum</MudTd>
         <MudTd>
-            <MudFab Color="Color.Secondary" Icon="@Icons.Material.Filled.Close" Size="Size.Small" OnClick="@(()=>RemoveButtonClicked(@contact.Name, @contact.PhoneNum))"></MudFab>
+            <MudFab Color="Color.Secondary" Icon="@Icons.Material.Filled.Close" Size="Size.Small" OnClick="@(()=>RemoveButtonClicked(@context.Name, @context.PhoneNum))"></MudFab>
         </MudTd>
     </RowTemplate>
 </MudTable>

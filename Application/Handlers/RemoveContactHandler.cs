@@ -15,7 +15,7 @@ using Application.ViewModels;
 
 namespace Application.Handlers
 {
-    public class RemoveContactHandler : IRequestHandler<AddContactCommand, bool>
+    public class RemoveContactHandler : IRequestHandler<RemoveContactCommand, bool>
     {
         private readonly IRepository _data;
         private readonly IMapper _mapper;
@@ -26,7 +26,7 @@ namespace Application.Handlers
             _mapper = mapper;
         }
 
-        public Task<bool> Handle(AddContactCommand request, CancellationToken cancellationToken)
+        public Task<bool> Handle(RemoveContactCommand request, CancellationToken cancellationToken)
         {
             return Task.FromResult(_data.RemoveContacts(_mapper.Map<Contacts>(request.contact)));
         }
