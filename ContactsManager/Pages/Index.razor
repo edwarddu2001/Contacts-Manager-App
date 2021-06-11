@@ -1,11 +1,10 @@
 ﻿@page "/"
-@using System.ComponentModel.DataAnnotations
 @inject MediatR.IMediator _mediator
 
 <MudCard Elevation="25" Class="my-5">
     <MudCardContent>
-        <MudTextField @bind-Value="name" Label="Name" Variant="Variant.Text"></MudTextField>
-        <MudTextField @bind-Value="phoneNumber" Label="Phone Number" Variant="Variant.Text"></MudTextField>
+        <MudTextField @bind-Value="@contact.Name" Label="Name" Variant="Variant.Text"></MudTextField>
+        <MudTextField @bind-Value="@contact.PhoneNum" Label="Phone Number" Variant="Variant.Text"></MudTextField>
         <br />
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddButtonClicked">Add</MudButton>
     </MudCardContent>
@@ -20,23 +19,19 @@
         <MudTh>Phone Number</MudTh>
     </HeaderContent>
     <RowTemplate>
-        @foreach (var contact in contacts)
-        {
-            <MudTd DataLabel="Name">@contact.Name</MudTd>
-            <MudTd DataLabel="PhoneNumber">@contact.PhoneNum</MudTd>
-            <MudTd>
-                <MudFab Color="Color.Secondary" Icon="@Icons.Material.Filled.Close" Size="Size.Small" OnClick="@(()=>RemoveButtonClicked(@contact.Name, @contact.PhoneNum))"></MudFab>
-            </MudTd>
-        }
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="PhoneNumber">@context.PhoneNum</MudTd>
+        <MudTd>
+            <MudFab Color="Color.Secondary" Icon="@Icons.Material.Filled.Close" Size="Size.Small" OnClick="@(()=>RemoveButtonClicked(@contact.Name, @contact.PhoneNum))"></MudFab>
+        </MudTd>
     </RowTemplate>
 </MudTable>
 
 <br />
 
 @code {
-    public string name;
-    public string phoneNumber;
-    List<ContactsViewModel> contacts = new();
+    private ContactsViewModel contact = new();
+    private List<ContactsViewModel> contacts = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -50,12 +45,7 @@
 
     private async Task AddButtonClicked()
     {
-        ContactsViewModel newContact = new ContactsViewModel()
-        {
-            Name = name,
-            PhoneNum = phoneNumber
-        };
-        bool response = await _mediator.Send(new AddContactCommand(newContact));
+        bool response = await _mediator.Send(new AddContactCommand(contact));
         if (response)
         {
             await UpdateList();
