@@ -15,6 +15,13 @@ namespace Infrastructure
 
         public bool AddContacts(Contacts contact)
         {
+            foreach (Contacts c in contactsList)
+            {
+                if (c.Name.Equals(contact.Name) && c.PhoneNum.Equals(contact.PhoneNum))
+                {
+                    return false;
+                }
+            }
             contactsList.Add(contact);
             return true;
         }
