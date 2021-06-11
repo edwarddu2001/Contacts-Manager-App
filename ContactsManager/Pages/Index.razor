@@ -45,14 +45,17 @@
 
     private async Task AddButtonClicked()
     {
-        bool response = await _mediator.Send(new AddContactCommand(contact));
-        if (response)
+        if(!(string.IsNullOrEmpty(contact.Name) || string.IsNullOrEmpty(contact.PhoneNum)))
         {
-            await UpdateList();
-        }
-        else
-        {
-            throw new ArgumentException("Contact is not valid");
+            bool response = await _mediator.Send(new AddContactCommand(contact));
+            if (response)
+            {
+                await UpdateList();
+            }
+            else
+            {
+                throw new ArgumentException("Contact is not valid");
+            }
         }
     }
 
