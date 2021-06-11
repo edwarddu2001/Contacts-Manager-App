@@ -1,22 +1,20 @@
 ﻿@page "/"
 @inject MediatR.IMediator _mediator
-@using System.ComponentModel.DataAnnotations
 
-<EditForm Model="@contact" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
+<EditForm Model="@contact" OnValidSubmit="AddButtonClicked" OnInvalidSubmit="()=>OnInvalidSubmit()">
     <DataAnnotationsValidator/>
     <MudCard Elevation="25" Class="my-5">
         <MudCardContent>
-            <MudTextField @bind-Value="@contact.Name" Label="Name" HelperText="Max. 10 characters, Min. 2 characters" Variant="Variant.Text" For="@(() => contact.Name)" />
-            <MudTextField @bind-Value="@contact.PhoneNum" Label="Phone Number" Variant="Variant.Text" For="@(() => contact.PhoneNum)" />
+            <MudTextField @bind-Value="contact.Name" Label="Name" HelperText="Max 15 characters" Variant="Variant.Text" For="@(() => contact.Name)" />
+            <MudTextField @bind-Value="contact.PhoneNum" Label="Phone Number" HelperText="Format: ###-###-####" Variant="Variant.Text" For="@(() => contact.PhoneNum)" />
             <br />
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddButtonClicked">Add</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Add</MudButton>
+            @if (@addError)
+            {
+                <MudAlert Severity="Severity.Error" Class="mt-5">@errorMessage</MudAlert>
+            }
         </MudCardContent>
     </MudCard>
-    <ValidationSummary />
-    @if (@addError)
-    {
-        <MudAlert Severity="Severity.Error" Class="mt-5">@errorMessage</MudAlert>
-    }
 </EditForm>
 
 <MudTable Items="@contacts" Hover="true" Elevation="25" Class="my-5">
@@ -43,16 +41,6 @@
 <br />
 
 @code {
-    private void OnValidSubmit(EditContext context)
-    {
-        StateHasChanged();
-    }
-
-    private void OnInvalidSubmit(EditContext context)
-    {
-        StateHasChanged();
-    }
-
     private ContactsViewModel contact = new();
     private List<ContactsViewModel> contacts = new();
     private bool addError;
@@ -76,8 +64,16 @@
         removeError = false;
     }
 
+    private void OnInvalidSubmit()
+    {
+        addError = true;
+        errorMessage = "Invalid Contact";
+    }
+
     private async Task AddButtonClicked()
     {
+        ResetErrors();
+
         if (!(string.IsNullOrEmpty(contact.Name) || string.IsNullOrEmpty(contact.PhoneNum)))
         {
             bool response = await _mediator.Send(new AddContactCommand(contact));
