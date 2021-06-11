@@ -13,7 +13,7 @@ namespace Application.ViewModels
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Phone number is required")]
-        [Phone]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNum { get; set; }
     }
 }

@@ -1,14 +1,19 @@
 ﻿@page "/"
 @inject MediatR.IMediator _mediator
+@using System.ComponentModel.DataAnnotations
 
-<MudCard Elevation="25" Class="my-5">
-    <MudCardContent>
-        <MudTextField @bind-Value="@contact.Name" Label="Name" Variant="Variant.Text"></MudTextField>
-        <MudTextField @bind-Value="@contact.PhoneNum" Label="Phone Number" Variant="Variant.Text"></MudTextField>
-        <br />
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddButtonClicked">Add</MudButton>
-    </MudCardContent>
-</MudCard>
+<EditForm Model="@contact" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator/>
+    <MudCard Elevation="25" Class="my-5">
+        <MudCardContent>
+            <MudTextField @bind-Value="@contact.Name" Label="Name" HelperText= "Max. 10 characters, Min. 2 characters" Variant="Variant.Text" For="@(() => contact.Name)" />
+            <MudTextField @bind-Value="@contact.PhoneNum" Label="Phone Number" Variant="Variant.Text" For="@(() => contact.PhoneNum)"/>
+            <br />
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddButtonClicked">Add</MudButton>
+        </MudCardContent>
+    </MudCard>
+    <ValidationSummary/>
+</EditForm>
 
 <MudTable Items="@contacts" Hover="true" Elevation="25" Class="my-5">
     <ToolBarContent>
@@ -30,6 +35,11 @@
 <br />
 
 @code {
+    private void OnValidSubmit(EditContext context)
+    {
+        //StateHasChanged();
+    }
+
     private ContactsViewModel contact = new();
     private List<ContactsViewModel> contacts = new();
 
@@ -45,7 +55,7 @@
 
     private async Task AddButtonClicked()
     {
-        if(!(string.IsNullOrEmpty(contact.Name) || string.IsNullOrEmpty(contact.PhoneNum)))
+        if (!(string.IsNullOrEmpty(contact.Name) || string.IsNullOrEmpty(contact.PhoneNum)))
         {
             bool response = await _mediator.Send(new AddContactCommand(contact));
             if (response)
@@ -70,7 +80,8 @@
         if (response)
         {
             await UpdateList();
-        } else
+        }
+        else
         {
             throw new ArgumentException("Contact does not exist");
         }
