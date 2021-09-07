@@ -1,9 +1,0 @@
-version: '1'
-services:
-  contactsmanagerapp:
-  image: ./
-  build: ContactsManagerApp
-  container_name: ContactsManagerApp
-  ports:
-    - "5100:5100"
-    
